@@ -1,9 +1,10 @@
 import org.jetbrains.annotations.NotNull;
 
 public class Box {
-    float x, y, width, vel, mass;
+    double x, y, vel;
+    float width,  mass;
 
-    Box (float x, float y, float w, float vel, float mass) {
+    Box (double x, double y, float w, double vel, float mass) {
         this.x = x;
         this.y = y;
         this.width = w;
@@ -20,7 +21,7 @@ public class Box {
     }
     void show() {
         MainClass.processing.fill(255,0,255);
-        MainClass.processing.rect(x,y,width,width);
+        MainClass.processing.rect((float)x,(float) y,width,width);
     }
 
     void update() {
@@ -29,18 +30,18 @@ public class Box {
     }
 
     boolean collide(Box sb) {
-        if (x < sb.x + sb.width) {
+        if (x < sb.x + sb.width || x+width<sb.x) {
            return true;
         } else {
             return false;
         }
     }
 
-    float elasticCollision(@NotNull Box other) {
+    double elasticCollision(@NotNull Box other) {
 
-        float den = mass + other.mass;
-        float first = ((mass - other.mass) / den) * vel;
-        float second = ((2 * other.mass)/den) * other.vel;
+        double den = mass + other.mass;
+        double first = ((mass - other.mass) / den) * vel;
+        double second = ((2 * other.mass)/den) * other.vel;
         return (first + second) ;
     }
 
